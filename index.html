@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TimeBox - Pomodoro</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- LOGIN / REGISTER -->
+  <div id="auth" class="auth-section">
+    <div class="form-container">
+      <form id="login-form" class="auth-form">
+        <h2>Iniciar Sesión</h2>
+        <input type="email" id="login-email" placeholder="Correo electrónico" required />
+        <input type="password" id="login-password" placeholder="Contraseña" required />
+        <button type="button" onclick="loginUser()">Entrar</button>
+        <p>¿No tienes cuenta? <a href="#" onclick="showRegister()">Regístrate</a></p>
+      </form>
+
+      <form id="register-form" class="auth-form hidden">
+        <h2>Registrarse</h2>
+        <input type="text" id="register-name" placeholder="Nombre completo" required />
+        <input type="email" id="register-email" placeholder="Correo electrónico" required />
+        <input type="password" id="register-password" placeholder="Contraseña" required />
+        <button type="button" onclick="registerUser()">Registrarse</button>
+        <p>¿Ya tienes cuenta? <a href="#" onclick="showLogin()">Inicia sesión</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- APP PRINCIPAL -->
+  <div class="container hidden" id="container">
+    <h1>TimeBox Pomodoro</h1>
+    <div class="timer-controls">
+      <button onclick="setTimer('pomodoro')">Pomodoro</button>
+      <button onclick="setTimer('short')">Short Break</button>
+      <button onclick="setTimer('long')">Long Break</button>
+    </div>
+    <div class="timer-display">
+      <span id="minutes">25</span>:<span id="seconds">00</span>
+    </div>
+    <div class="actions">
+      <button onclick="startTimer()">Iniciar</button>
+      <button onclick="pauseTimer()">Pausar</button>
+      <button onclick="toggleDarkMode()">🌙 Modo Oscuro</button>
+    </div>
+
+    <div id="zen-container">
+      <img id="zen-image" src="assets/Images/focus.gif" alt="Imagen Zen" />
+      <p id="zen-caption">Respira profundo, todo empieza con calma.</p>
+    </div>
+
+    <audio id="zen-music" loop>
+      <source src="assets/audio/zen-music.mp3" type="audio/mpeg" />
+    </audio>
+    <button onclick="toggleMusic()">Música Zen</button>
+    <button onclick="showStats()">Ver estadísticas</button>
+    <button onclick="logoutUser()">Cerrar sesión</button>
+  </div>
+
+  <!-- MODAL DE ESTADÍSTICAS -->
+  <div id="stats-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" onclick="closeStats()">&times;</span>
+      <h2>Estadísticas de Uso</h2>
+      <label for="monthPicker">Filtrar por mes:</label>
+      <input type="month" id="monthPicker" onchange="showStats()" />
+      <p>Pomodoros completados: <span id="pomodoro-count">0</span></p>
+      <p>Descansos cortos: <span id="short-count">0</span></p>
+      <p>Descansos largos: <span id="long-count">0</span></p>
+      <p>Tiempo total de concentración: <span id="total-minutes">0</span> minutos</p>
+      <canvas id="statsChart" width="400" height="200"></canvas>
+      <button onclick="exportCSV()">Exportar CSV</button>
+      <button onclick="closeStats()">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
